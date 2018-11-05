@@ -163,6 +163,19 @@ export const getIsGarbRedBag = async () => {
   }
 }
 
+export const setIsCash = isCash => {
+  return Taro.setStorage({ key: 'isCash', data: isCash })
+}
+
+export const getIsCash = async () => {
+  try {
+    const res = await Taro.getStorage({ key: 'isCash' })
+    return res
+  } catch (e) {
+    return { data: false }
+  }
+}
+
 export const getStorageShareTimes = async () => {
   try {
     const times = await Taro.getStorage({ key: 'shareTimes' })

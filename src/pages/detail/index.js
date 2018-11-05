@@ -7,7 +7,8 @@ import Coin from '../../asset/images/img-coin-yuan.png'
 import { Loading, CustomModal } from '../../components'
 import pageWithData from '../../common/PageWithData'
 import { getStorageShareTimes, setStorageShareTimes } from '../../utils'
-import Emoji from '../../asset/images/img-emoji-emm.png'
+import ImgCheck from '../../asset/images/img-check-green.png'
+import { BASE_MONEY } from '../../utils/constant'
 import './index.scss'
 
 @pageWithData('detail')
@@ -40,13 +41,23 @@ export default class extends PureComponent {
       path: `/pages/index/index`,
     }
   }
+  handleCash() {
+    this.handleChangeModal(true)
+    this.props.dispatch(this.mappingAction('saveIsCash', true))
+  }
   handleChangeModal(status) {
     this.setState({
       isShowModal: status,
     })
   }
+  handleGoTmall() {
+    Taro.navigateTo({
+      url: '/pages/tmall/index',
+    })
+    this.handleChangeModal(false)
+  }
   render() {
-    const { loading } = this.props
+    const { loading, isCash } = this.props
     const { isShowModal, shareTimes } = this.state
     return (
       <View className="detail">
@@ -56,37 +67,29 @@ export default class extends PureComponent {
           <block>
             <Image src={Coin} className="coin" />
             <View className="tip">我的红包金额</View>
-            <View className="money">￥{shareTimes === 0 ? '0.54' : '1.08'}</View>
-            <Button className="cash" onClick={this.handleChangeModal.bind(this, true)}>
-              提现
-            </Button>
+            <View className="money">￥{isCash ? '0.00' : shareTimes === 0 ? BASE_MONEY : BASE_MONEY * 2}</View>
+            {!isCash && (
+              <Button className="cash" onClick={this.handleCash.bind(this)}>
+                提现
+              </Button>
+            )}
+            {isCash && (
+              <Button className="cash disabled" disabled>提现已申请</Button>
+            )}
             <Button className="share" openType="share">
-              <View className="top">{shareTimes > 0 ? '分享给好友，一起领现金' : '分享到群，红包翻倍'}</View>
-              {shareTimes === 0 && <View className="desc">￥1.08</View>}
+              <View className="top">{shareTimes > 0 ? '分享抽奖给好友，一起领现金' : '分享抽奖到群，红包翻倍'}</View>
+              {shareTimes === 0 && <View className="desc">￥{BASE_MONEY * 2}</View>}
             </Button>
             <CustomModal
               isShow={isShowModal}
-              title="温馨提示"
               isFooter={false}
-              onClose={this.handleChangeModal.bind(this, false)}
+              onClose={this.handleGoTmall.bind(this)}
             >
-              <View className="btn-content">
-                <View className="top-tip">
-                  <Image src={Emoji} className="emoji" />因微信提现次数限制，请添加我们客服领现金红包
-                </View>
-                <View className="bottom-tip">
-                  <View className="top">
-                    回复文字<Text className="red-text">“红包”</Text>
-                  </View>
-                  <View>添加客服领红包</View>
-                  <Button
-                    openType="contact"
-                    className="red"
-                    onClick={this.handleChangeModal.bind(this, false)}
-                  >
-                    去回复
-                  </Button>
-                </View>
+              <View className="tip-content">
+                <Image src={ImgCheck} />
+                <View className="title">提现申请成功！</View>
+                <View className="desc">由于提现人数较多，奖金预计在1-3个工作日内到账您的微信钱包</View>
+                <Button className="green" onClick={this.handleGoTmall.bind(this)}>好的</Button>
               </View>
             </CustomModal>
           </block>

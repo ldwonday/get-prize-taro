@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import action from '../utils/action'
-import { getStorageShareTimes } from '../utils'
+import { setIsCash, getIsCash } from '../utils'
 import { model } from './common'
 
 export default modelExtend(model, {
@@ -9,7 +9,21 @@ export default modelExtend(model, {
     shareTimes: 0,
   },
   effects: {
-    *init({ payload }, { call, put }) {},
+    *init({ payload }, { call, put }) {
+      const res = yield getIsCash()
+      yield put(
+        action('save', {
+          isCash: res.data,
+        })
+      )
+    },
+    *saveIsCash({ payload }, { call, put }) {
+      yield setIsCash(payload)
+      yield put(
+        action('save', {
+          isCash: payload,
+        })
+      )
+    },
   },
-  reducers: {},
 })

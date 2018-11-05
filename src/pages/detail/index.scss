@@ -39,6 +39,14 @@
     font-size: 36px;
     color: #FFFFFF;
     margin-top: 56px;
+    &.disabled{
+      background: #eee;
+      transform: none !important;
+    }
+    &:after{
+      background: none;
+      border: none;
+    }
   }
   .share{
     background: #FF9532;
@@ -90,6 +98,34 @@
         height: 80px;
         line-height: 80px;
       }
+    }
+  }
+  .tip-content{
+    image{
+      width: 120px;
+      height: 120px;
+    }
+    .title{
+      font-size: 42px;
+      color: #000000;
+      margin-top: 48px;
+    }
+    .desc{
+      font-size: 28px;
+      color: #666666;
+      margin-top: 24px;
+    }
+    .green{
+      margin-top: 89px;
+      margin-bottom: 46px;
+      background: #1AAD19;
+      border: 2px solid rgba(5,5,5,0.08);
+      border-radius: 40px;
+      width: 311px;
+      height: 80px;
+      line-height: 80px;
+      font-size: 34px;
+      color: #FFFFFF;
     }
   }
 }

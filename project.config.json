@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 12,
 			"list": [
 				{
 					"id": 0,
@@ -103,6 +103,13 @@
 					"name": "order/detail",
 					"pathName": "pages/order/detail/index",
 					"query": "orderNo=P288983820046257"
+				},
+				{
+					"id": -1,
+					"name": "tmall",
+					"pathName": "pages/tmall/index",
+					"query": "scene=102934413946208",
+					"scene": "1047"
 				}
 			]
 		}

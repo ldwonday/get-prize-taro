@@ -20,6 +20,7 @@ import OpenBtn from '../../asset/images/btn-open.png'
 import Clock from '../../asset/images/img-clock-ok.png'
 import Complete from '../../asset/images/complete.png'
 import { parseDate, formatDate } from '../../utils/timeFormat'
+import { BASE_MONEY } from '../../utils/constant'
 import './index.scss'
 
 @pageWithData('home')
@@ -180,12 +181,12 @@ export default class extends PureComponent {
                 <Image src={DetailBag} className="detail-bg" />
                 <View className="detail-money">
                   <Text className="unit">￥</Text>
-                  <Text className="money">{shareTimes > 0 ? 1.08 : 0.54}</Text>
+                  <Text className="money">{shareTimes > 0 ? BASE_MONEY * 2 : BASE_MONEY}</Text>
                 </View>
                 <View className="bottom-btn-group">
                   <Button className="custom" openType="share" data-type="go">
-                    <View className="top">分享到群，红包翻倍</View>
-                    <View className="desc">¥ 1.08</View>
+                    <View className="top">分享抽奖到群，红包翻倍</View>
+                    <View className="desc">¥ {BASE_MONEY * 2}</View>
                   </Button>
                   <Button className="custom go" onClick={this.handleGoDetail.bind(this)}>
                     <View className="top">直接收下</View>
