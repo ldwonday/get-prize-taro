@@ -1,8 +1,8 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "congregation-taro",
+	"projectname": "get-prize-taro",
 	"description": "article",
-	"appid": "wx49821973c5425740",
+	"appid": "wx83fd908c0fdb4f76",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.97",
+	"libVersion": "2.2.5",
 	"condition": {
 		"search": {
 			"current": -1,

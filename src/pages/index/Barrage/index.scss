@@ -1,0 +1,25 @@
+@import '../../../asset/styles/import';
+.barrage {
+  opacity: 0.73;
+  background: rgba(0,0,0,0.64);
+  box-shadow: 0 4px 11px 0 rgba(0,0,0,0.50);
+  height: 80px;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  .left{
+    padding: 0 10px;
+    image{
+      border-radius: 100%;
+      width: 42px;
+      height: 42px;
+    }
+  }
+  .right{
+    font-size: 20px;
+    color: #FEFFFF;
+    margin-right: 20px;
+  }
+}

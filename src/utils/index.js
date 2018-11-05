@@ -37,6 +37,9 @@ export const showModalWithTitle = (title = '提示', content = '数据加载失�
     })
   }
 }
+export const showTextToast = (content = '') => {
+  return Taro.showToast({ title: content, icon: 'none' })
+}
 export const showFailModal = (content = '数据加载失败') => {
   return showModal(content)
 }
@@ -126,12 +129,38 @@ export const setStorageShareTimes = times => {
   return Taro.setStorage({ key: 'shareTimes', data: times })
 }
 
+export const setIsShowFixedTip = fixedTip => {
+  return Taro.setStorage({ key: 'isShowFixedTip', data: fixedTip })
+}
+
+export const getIsShowFixedTip = async () => {
+  try {
+    const res = await Taro.getStorage({ key: 'isShowFixedTip' })
+    return res
+  } catch (e) {
+    return { data: true }
+  }
+}
+
 export const setIsFirst = isFirst => {
   return Taro.setStorage({ key: 'isFirst', data: isFirst })
 }
 
 export const getIsFirst = isFirst => {
   return Taro.getStorage({ key: 'isFirst' })
+}
+
+export const setIsGarbRedBag = isGarbRedBag => {
+  return Taro.setStorage({ key: 'isGarbRedBag', data: isGarbRedBag })
+}
+
+export const getIsGarbRedBag = async () => {
+  try {
+    const res = await Taro.getStorage({ key: 'isGarbRedBag' })
+    return res
+  } catch (e) {
+    return { data: false }
+  }
 }
 
 export const getStorageShareTimes = async () => {

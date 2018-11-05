@@ -13,19 +13,7 @@ export default modelExtend(model, {
   },
   reducers: {},
   effects: {
-    *init({ payload }, { put }) {
-      try {
-        yield put(action('user/init'))
-      } catch (e) {
-        console.log(e)
-      }
-      try {
-        const { data } = yield getIsFirst()
-        yield put(action('save', { isFirst: data }))
-      } catch (e) {
-        yield put(action('save', { isFirst: true }))
-      }
-    },
+    *init({ payload }, { put }) {},
     *changeIsFirst({ payload }, { put }) {
       yield setIsFirst(payload)
       yield put(action('save', { isFirst: payload }))
