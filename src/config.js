@@ -9,7 +9,6 @@ export default {
   kefu: 'cxm19880710',
   api: {
     config: {
-      check: `${apiPrefix}config/check?v=v${version}&appId=${appId}`,
       init: `${apiPrefix}config/init/${appId}`,
     },
     balance: {
