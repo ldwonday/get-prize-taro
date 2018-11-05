@@ -1,2 +1,2 @@
-# congregation-taro
-A distribution platform base on taro
+# get-prize-taro
+Get prize base on taro
