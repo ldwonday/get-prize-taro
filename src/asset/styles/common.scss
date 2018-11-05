@@ -23,6 +23,23 @@ button{
       transform: none !important;
     }
   }
+  &.custom{
+    &:active{
+      background: none;
+      &:after{
+        background: none;
+        border: none;
+      }
+    }
+    &:hover{
+      background: none;
+      border: none;
+    }
+    &:after{
+      background: none;
+      border: none;
+    }
+  }
 	&.img-button{
 		background: none;
 		padding: 0;

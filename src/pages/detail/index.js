@@ -1,139 +1,94 @@
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import action from '../../utils/action'
 import Taro, { PureComponent } from '@tarojs/taro'
-import { getProductShareTimes, setProductShareTimes } from '../../utils'
-import { Card, Loading, Barrage, Iconfont } from '../../components'
-import Banner from './Banner'
-import Content from './Content'
-import Description from './Description'
-import ButtonGroup from './ButtonGroup'
-import PopShare from './PopShare'
+import ShareImage from '../../asset/images/singledog-cover.jpg'
+import Coin from '../../asset/images/img-coin-yuan.png'
+import { Loading, CustomModal } from '../../components'
 import pageWithData from '../../common/PageWithData'
-import MessageItem from './MessageItem'
-import FloatImage from '../../asset/images/img_float_redbag.gif'
+import { getStorageShareTimes, setStorageShareTimes } from '../../utils'
+import Emoji from '../../asset/images/img-emoji-emm.png'
 import './index.scss'
 
 @pageWithData('detail')
-@connect(({ detail, user }) => ({
+@connect(({ detail }) => ({
   ...detail,
-  user,
 }))
 export default class extends PureComponent {
-  config = {
-    navigationBarTitleText: '商品详情',
-  }
-  static defaultProps = {
-    info: {},
-    barrages: [],
-  }
   state = {
-    isShowPopShare: false,
-    currentShareTimes: 0,
+    isShowModal: false,
   }
   componentDidMount() {
-    getProductShareTimes()
-      .then(({ data }) => {
-        try {
-          this.allProductShareTimes = JSON.parse(data)
-          this.setState({
-            currentShareTimes: this.allProductShareTimes[this.$router.params.id] || 0,
-          })
-        } catch (e) {
-          console.log(e)
-          this.allProductShareTimes = {}
-        }
+    getStorageShareTimes().then(res => {
+      this.setState({
+        shareTimes: res.data,
       })
-      .catch(e => {
-        this.allProductShareTimes = {}
-      })
+    })
   }
   onShareAppMessage() {
-    const info = this.props.user.userInfo
-    const pTitle = this.props.info.name || ''
+    setTimeout(() => {
+      const shareTimes = this.props.shareTimes + 1
+      setStorageShareTimes(shareTimes)
+      this.setState({
+        shareTimes,
+      })
+      this.props.dispatch(action('home/saveShareTimes', shareTimes))
+    }, 2000)
     return {
-      title: `${(info && info.nickName) || ''}邀你一起免费拿【${pTitle}】`,
-      path: `/pages/detail/index?id=${this.props.info.productId}`,
-      imageUrl: this.shareImage,
-      success: () => {
-        const addTimes = this.state.currentShareTimes + 1
-        this.allProductShareTimes[this.$router.params.id] = addTimes
-        this.setState({
-          currentShareTimes: addTimes,
-        })
-        setProductShareTimes(JSON.stringify(this.allProductShareTimes))
-        if (addTimes === this.props.info.needShareTimes) {
-          this.handleBuyProduct('2')
-        }
-      },
+      title: '我刚领了现金红包，你也快来领吧❤️',
+      imageUrl: ShareImage,
+      path: `/pages/index/index`,
     }
   }
-  handleBuyProduct(type) {
-    Taro.navigateTo({
-      url: `/pages/order/confirm/index?id=${this.props.info.productId}&buyType=${type}`,
-    })
-  }
-  handleClosePopShare() {
+  handleChangeModal(status) {
     this.setState({
-      isShowPopShare: false,
-    })
-  }
-  handleOpenPopShare() {
-    this.setState({
-      isShowPopShare: true,
-    })
-  }
-  handleMoreComment() {
-    Taro.navigateTo({
-      url: `/pages/detail/comment/index?id=${this.props.info.productId}`,
+      isShowModal: status,
     })
   }
   render() {
-    const {
-      loading,
-      info = {},
-      barrages,
-      comments,
-      user: { userInfo },
-    } = this.props
-
-    const { isShowPopShare, currentShareTimes } = this.state
-
-    const { banners = [], detailList, ...desc } = info
-
+    const { loading } = this.props
+    const { isShowModal, shareTimes } = this.state
     return (
-      <View>
+      <View className="detail">
         {loading ? (
           <Loading height="100vh" />
         ) : (
           <block>
-            <PopShare isShow={isShowPopShare} onClose={this.handleClosePopShare.bind(this)} />
-            <Barrage data={barrages} position={{ left: '30rpx', top: '115rpx' }} />
-            <Banner data={banners} />
-            <Description data={desc} />
-            <Card title="用户留言">
-              <View className="more" onClick={this.handleMoreComment.bind(this)}>
-                更多
-                <Iconfont type="previewright" size={18} color="#9b9b9b" />
+            <Image src={Coin} className="coin" />
+            <View className="tip">我的红包金额</View>
+            <View className="money">￥{shareTimes === 0 ? '0.54' : '1.08'}</View>
+            <Button className="cash" onClick={this.handleChangeModal.bind(this, true)}>
+              提现
+            </Button>
+            <Button className="share" openType="share">
+              <View className="top">{shareTimes > 0 ? '分享给好友，一起领现金' : '分享到群，红包翻倍'}</View>
+              {shareTimes === 0 && <View className="desc">￥1.08</View>}
+            </Button>
+            <CustomModal
+              isShow={isShowModal}
+              title="温馨提示"
+              isFooter={false}
+              onClose={this.handleChangeModal.bind(this, false)}
+            >
+              <View className="btn-content">
+                <View className="top-tip">
+                  <Image src={Emoji} className="emoji" />因微信提现次数限制，请添加我们客服领现金红包
+                </View>
+                <View className="bottom-tip">
+                  <View className="top">
+                    回复文字<Text className="red-text">“红包”</Text>
+                  </View>
+                  <View>添加客服领红包</View>
+                  <Button
+                    openType="contact"
+                    className="red"
+                    onClick={this.handleChangeModal.bind(this, false)}
+                  >
+                    去回复
+                  </Button>
+                </View>
               </View>
-              <View className="comments">
-                {comments.map(item => (
-                  <MessageItem key={item} data={item} />
-                ))}
-              </View>
-            </Card>
-            <Card title="商品详情" className="detail-card">
-              <Content data={detailList} />
-            </Card>
-            <ButtonGroup
-              isAuthorize={!!userInfo}
-              data={desc}
-              currentShareTimes={currentShareTimes}
-              needShareTimes={info.needShareTimes}
-              onBuy={this.handleBuyProduct.bind(this)}
-            />
-            <View className="float-share" onClick={this.handleOpenPopShare.bind(this)}>
-              <Image src={FloatImage} />
-            </View>
+            </CustomModal>
           </block>
         )}
       </View>

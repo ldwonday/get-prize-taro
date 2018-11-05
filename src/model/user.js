@@ -28,7 +28,7 @@ export default modelExtend(model, {
       console.log(code)
       const { data } = yield call(mp.login, code)
       yield setStorageLoginResult(data)
-      yield put(action('saveUser'))
+      // yield put(action('saveUser'))
     },
     *saveUser({ payload }, { call, put }) {
       try {

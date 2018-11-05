@@ -129,12 +129,38 @@ export const setStorageShareTimes = times => {
   return Taro.setStorage({ key: 'shareTimes', data: times })
 }
 
+export const setIsShowFixedTip = fixedTip => {
+  return Taro.setStorage({ key: 'isShowFixedTip', data: fixedTip })
+}
+
+export const getIsShowFixedTip = async () => {
+  try {
+    const res = await Taro.getStorage({ key: 'isShowFixedTip' })
+    return res
+  } catch (e) {
+    return { data: true }
+  }
+}
+
 export const setIsFirst = isFirst => {
   return Taro.setStorage({ key: 'isFirst', data: isFirst })
 }
 
 export const getIsFirst = isFirst => {
   return Taro.getStorage({ key: 'isFirst' })
+}
+
+export const setIsGarbRedBag = isGarbRedBag => {
+  return Taro.setStorage({ key: 'isGarbRedBag', data: isGarbRedBag })
+}
+
+export const getIsGarbRedBag = async () => {
+  try {
+    const res = await Taro.getStorage({ key: 'isGarbRedBag' })
+    return res
+  } catch (e) {
+    return { data: false }
+  }
 }
 
 export const getStorageShareTimes = async () => {

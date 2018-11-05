@@ -45,15 +45,11 @@ const config = {
     },
   },
   defineConstants: {
-    APP_NAME: '集赞领',
-    ZF_IMAGE: 'https://klimg.pptmbt.com/pub/jz/',
+    APP_NAME: '得大奖',
+    ONLINE_IMAGE: 'https://klimg.pptmbt.com/pub/get-prize/',
   },
   copy: {
-    patterns: [
-      { from: 'src/asset/images', to: 'dist/asset/images' },
-      { from: 'src/components/wxParse/wxParse.wxss', to: 'dist/components/wxParse/wxParse.wxss' },
-      { from: 'src/components/wxParse/wxParse.wxml', to: 'dist/components/wxParse/wxParse.wxml' },
-    ],
+    patterns: [{ from: 'src/asset/images', to: 'dist/asset/images' }],
     options: {},
   },
   weapp: {

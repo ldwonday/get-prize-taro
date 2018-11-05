@@ -1,8 +1,8 @@
 const NODE_ENV = process.env.NODE_ENV
 
 const isDev = NODE_ENV !== 'production'
-const apiPrefix = isDev ? `https://distrib.ymmbtw.com/` : 'https://cf.zxxgtw.com/'
-const appId = 'wx49821973c5425740'
+const apiPrefix = isDev ? `https://kldev.ymmbtw.com/` : 'https://cf.zxxgtw.com/'
+const appId = 'wx83fd908c0fdb4f76'
 
 export default {
   appId,
@@ -49,6 +49,10 @@ export default {
     },
     formId: {
       submit: formId => `${apiPrefix}formId/submit/${formId}`,
+    },
+    lottery: {
+      submit: `${apiPrefix}lottery/submit`,
+      exist: `${apiPrefix}lottery/exist`,
     },
   },
 }
