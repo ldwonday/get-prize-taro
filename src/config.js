@@ -8,6 +8,9 @@ export default {
   appId,
   kefu: 'cxm19880710',
   api: {
+    config: {
+      init: `${apiPrefix}config/init/${appId}`,
+    },
     balance: {
       detail: `${apiPrefix}balance/detail`,
       query: `${apiPrefix}balance`,
